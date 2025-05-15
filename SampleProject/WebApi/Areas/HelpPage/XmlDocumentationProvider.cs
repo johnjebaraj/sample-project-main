@@ -14,12 +14,12 @@ namespace WebApi.Areas.HelpPage
     /// </summary>
     public class XmlDocumentationProvider : IDocumentationProvider, IModelDocumentationProvider
     {
+        private XPathNavigator _documentNavigator;
         private const string TypeExpression = "/doc/members/member[@name='T:{0}']";
         private const string MethodExpression = "/doc/members/member[@name='M:{0}']";
         private const string PropertyExpression = "/doc/members/member[@name='P:{0}']";
         private const string FieldExpression = "/doc/members/member[@name='F:{0}']";
         private const string ParameterExpression = "param[@name='{0}']";
-        private XPathNavigator _documentNavigator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlDocumentationProvider"/> class.

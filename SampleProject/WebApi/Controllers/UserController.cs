@@ -28,7 +28,12 @@ namespace WebApi.Controllers
         [HttpPost]
         public HttpResponseMessage CreateUser(Guid userId, [FromBody] UserModel model)
         {
-            var user = _createUserService.Create(userId, model.Name, model.Email, model.Type, model.AnnualSalary, model.Tags);
+            var user = _getUserService.GetUser(userId);
+            if (user != null)
+            {
+                return AlreadyExist(string.Format("User '{0}' already exist with id '{1}'. Consider changing the ID or Delete the existing user and attempt again", user.Name, user.Id));
+            }
+            user = _createUserService.Create(userId, model.Name, model.Email, model.Type, model.AnnualSalary, model.Tags);
             return Found(new UserData(user));
         }
 

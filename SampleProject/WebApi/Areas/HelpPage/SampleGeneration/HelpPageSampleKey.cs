@@ -139,11 +139,11 @@ namespace WebApi.Areas.HelpPage
             }
 
             return String.Equals(ControllerName, otherKey.ControllerName, StringComparison.OrdinalIgnoreCase) &&
-                   String.Equals(ActionName, otherKey.ActionName, StringComparison.OrdinalIgnoreCase) &&
-                   (MediaType == otherKey.MediaType || (MediaType != null && MediaType.Equals(otherKey.MediaType))) &&
-                   ParameterType == otherKey.ParameterType &&
-                   SampleDirection == otherKey.SampleDirection &&
-                   ParameterNames.SetEquals(otherKey.ParameterNames);
+                String.Equals(ActionName, otherKey.ActionName, StringComparison.OrdinalIgnoreCase) &&
+                (MediaType == otherKey.MediaType || (MediaType != null && MediaType.Equals(otherKey.MediaType))) &&
+                ParameterType == otherKey.ParameterType &&
+                SampleDirection == otherKey.SampleDirection &&
+                ParameterNames.SetEquals(otherKey.ParameterNames);
         }
 
         public override int GetHashCode()

@@ -47,7 +47,10 @@ namespace WebApi.Areas.HelpPage.Models
         /// </summary>
         public IList<ParameterDescription> RequestBodyParameters
         {
-            get { return GetParameterDescriptions(RequestModelDescription); }
+            get
+            {
+                return GetParameterDescriptions(RequestModelDescription);
+            }
         }
 
         /// <summary>
@@ -60,7 +63,10 @@ namespace WebApi.Areas.HelpPage.Models
         /// </summary>
         public IList<ParameterDescription> ResourceProperties
         {
-            get { return GetParameterDescriptions(ResourceDescription); }
+            get
+            {
+                return GetParameterDescriptions(ResourceDescription);
+            }
         }
 
         /// <summary>

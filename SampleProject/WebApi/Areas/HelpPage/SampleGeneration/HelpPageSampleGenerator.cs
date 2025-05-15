@@ -29,9 +29,9 @@ namespace WebApi.Areas.HelpPage
             ActionSamples = new Dictionary<HelpPageSampleKey, object>();
             SampleObjects = new Dictionary<Type, object>();
             SampleObjectFactories = new List<Func<HelpPageSampleGenerator, Type, object>>
-                                    {
-                                        DefaultSampleObjectFactory,
-                                    };
+            {
+                DefaultSampleObjectFactory,
+            };
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace WebApi.Areas.HelpPage
         /// <code>SampleObjectFactories.Insert(0, func)</code> to provide an override and
         /// <code>SampleObjectFactories.Add(func)</code> to provide a fallback.</remarks>
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures",
-                            Justification = "This is an appropriate nesting of generic types")]
+            Justification = "This is an appropriate nesting of generic types")]
         public IList<Func<HelpPageSampleGenerator, Type, object>> SampleObjectFactories { get; private set; }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace WebApi.Areas.HelpPage
         /// <param name="type">The type.</param>
         /// <returns>The sample object.</returns>
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes",
-                            Justification = "Even if all items in SampleObjectFactories throw, problem will be visible as missing sample.")]
+            Justification = "Even if all items in SampleObjectFactories throw, problem will be visible as missing sample.")]
         public virtual object GetSampleObject(Type type)
         {
             object sampleObject;
@@ -323,21 +323,21 @@ namespace WebApi.Areas.HelpPage
                 else
                 {
                     sample = new InvalidSample(String.Format(
-                                                             CultureInfo.CurrentCulture,
-                                                             "Failed to generate the sample for media type '{0}'. Cannot use formatter '{1}' to write type '{2}'.",
-                                                             mediaType,
-                                                             formatter.GetType().Name,
-                                                             type.Name));
+                        CultureInfo.CurrentCulture,
+                        "Failed to generate the sample for media type '{0}'. Cannot use formatter '{1}' to write type '{2}'.",
+                        mediaType,
+                        formatter.GetType().Name,
+                        type.Name));
                 }
             }
             catch (Exception e)
             {
                 sample = new InvalidSample(String.Format(
-                                                         CultureInfo.CurrentCulture,
-                                                         "An exception has occurred while using the formatter '{0}' to generate sample for media type '{1}'. Exception message: {2}",
-                                                         formatter.GetType().Name,
-                                                         mediaType.MediaType,
-                                                         UnwrapException(e).Message));
+                    CultureInfo.CurrentCulture,
+                    "An exception has occurred while using the formatter '{0}' to generate sample for media type '{1}'. Exception message: {2}",
+                    formatter.GetType().Name,
+                    mediaType.MediaType,
+                    UnwrapException(e).Message));
             }
             finally
             {

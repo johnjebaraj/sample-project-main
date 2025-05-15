@@ -33,6 +33,9 @@ namespace Data
 
         private static IDocumentStore InitializeDocumentStore(Assembly assembly, bool createIndexes)
         {
+
+
+
             var documentStore = new DocumentStore
                                 {
                                     Url = "http://localhost:8080/",

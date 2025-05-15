@@ -187,13 +187,13 @@ namespace WebApi.Areas.HelpPage
         private static bool IsTuple(Type genericTypeDefinition)
         {
             return genericTypeDefinition == typeof(Tuple<>) ||
-                   genericTypeDefinition == typeof(Tuple<,>) ||
-                   genericTypeDefinition == typeof(Tuple<,,>) ||
-                   genericTypeDefinition == typeof(Tuple<,,,>) ||
-                   genericTypeDefinition == typeof(Tuple<,,,,>) ||
-                   genericTypeDefinition == typeof(Tuple<,,,,,>) ||
-                   genericTypeDefinition == typeof(Tuple<,,,,,,>) ||
-                   genericTypeDefinition == typeof(Tuple<,,,,,,,>);
+                genericTypeDefinition == typeof(Tuple<,>) ||
+                genericTypeDefinition == typeof(Tuple<,,>) ||
+                genericTypeDefinition == typeof(Tuple<,,,>) ||
+                genericTypeDefinition == typeof(Tuple<,,,,>) ||
+                genericTypeDefinition == typeof(Tuple<,,,,,>) ||
+                genericTypeDefinition == typeof(Tuple<,,,,,,>) ||
+                genericTypeDefinition == typeof(Tuple<,,,,,,,>);
         }
 
         private static object GenerateKeyValuePair(Type keyValuePairType, Dictionary<Type, object> createdObjectReferences)
@@ -308,7 +308,9 @@ namespace WebApi.Areas.HelpPage
 
         private static object GenerateCollection(Type collectionType, int size, Dictionary<Type, object> createdObjectReferences)
         {
-            Type type = collectionType.IsGenericType ? collectionType.GetGenericArguments()[0] : typeof(object);
+            Type type = collectionType.IsGenericType ?
+                collectionType.GetGenericArguments()[0] :
+                typeof(object);
             object result = Activator.CreateInstance(collectionType);
             MethodInfo addMethod = collectionType.GetMethod("Add");
             bool areAllElementsNull = true;
@@ -393,42 +395,51 @@ namespace WebApi.Areas.HelpPage
 
         private class SimpleTypeObjectGenerator
         {
-            private static readonly Dictionary<Type, Func<long, object>> DefaultGenerators = InitializeGenerators();
             private long _index = 0;
+            private static readonly Dictionary<Type, Func<long, object>> DefaultGenerators = InitializeGenerators();
 
             [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "These are simple type factories and cannot be split up.")]
             private static Dictionary<Type, Func<long, object>> InitializeGenerators()
             {
                 return new Dictionary<Type, Func<long, object>>
-                       {
-                           { typeof(Boolean), index => true },
-                           { typeof(Byte), index => (Byte)64 },
-                           { typeof(Char), index => (Char)65 },
-                           { typeof(DateTime), index => DateTime.Now },
-                           { typeof(DateTimeOffset), index => new DateTimeOffset(DateTime.Now) },
-                           { typeof(DBNull), index => DBNull.Value },
-                           { typeof(Decimal), index => (Decimal)index },
-                           { typeof(Double), index => (Double)(index + 0.1) },
-                           { typeof(Guid), index => Guid.NewGuid() },
-                           { typeof(Int16), index => (Int16)(index % Int16.MaxValue) },
-                           { typeof(Int32), index => (Int32)(index % Int32.MaxValue) },
-                           { typeof(Int64), index => (Int64)index },
-                           { typeof(Object), index => new object() },
-                           { typeof(SByte), index => (SByte)64 },
-                           { typeof(Single), index => (Single)(index + 0.1) },
-                           {
-                               typeof(String), index => { return String.Format(CultureInfo.CurrentCulture, "sample string {0}", index); }
-                           },
-                           {
-                               typeof(TimeSpan), index => { return TimeSpan.FromTicks(1234567); }
-                           },
-                           { typeof(UInt16), index => (UInt16)(index % UInt16.MaxValue) },
-                           { typeof(UInt32), index => (UInt32)(index % UInt32.MaxValue) },
-                           { typeof(UInt64), index => (UInt64)index },
-                           {
-                               typeof(Uri), index => { return new Uri(String.Format(CultureInfo.CurrentCulture, "http://webapihelppage{0}.com", index)); }
-                           },
-                       };
+                {
+                    { typeof(Boolean), index => true },
+                    { typeof(Byte), index => (Byte)64 },
+                    { typeof(Char), index => (Char)65 },
+                    { typeof(DateTime), index => DateTime.Now },
+                    { typeof(DateTimeOffset), index => new DateTimeOffset(DateTime.Now) },
+                    { typeof(DBNull), index => DBNull.Value },
+                    { typeof(Decimal), index => (Decimal)index },
+                    { typeof(Double), index => (Double)(index + 0.1) },
+                    { typeof(Guid), index => Guid.NewGuid() },
+                    { typeof(Int16), index => (Int16)(index % Int16.MaxValue) },
+                    { typeof(Int32), index => (Int32)(index % Int32.MaxValue) },
+                    { typeof(Int64), index => (Int64)index },
+                    { typeof(Object), index => new object() },
+                    { typeof(SByte), index => (SByte)64 },
+                    { typeof(Single), index => (Single)(index + 0.1) },
+                    { 
+                        typeof(String), index =>
+                        {
+                            return String.Format(CultureInfo.CurrentCulture, "sample string {0}", index);
+                        }
+                    },
+                    { 
+                        typeof(TimeSpan), index =>
+                        {
+                            return TimeSpan.FromTicks(1234567);
+                        }
+                    },
+                    { typeof(UInt16), index => (UInt16)(index % UInt16.MaxValue) },
+                    { typeof(UInt32), index => (UInt32)(index % UInt32.MaxValue) },
+                    { typeof(UInt64), index => (UInt64)index },
+                    { 
+                        typeof(Uri), index =>
+                        {
+                            return new Uri(String.Format(CultureInfo.CurrentCulture, "http://webapihelppage{0}.com", index));
+                        }
+                    },
+                };
             }
 
             public static bool CanGenerateObject(Type type)

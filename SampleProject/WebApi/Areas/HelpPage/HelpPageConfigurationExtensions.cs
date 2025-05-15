@@ -179,8 +179,8 @@ namespace WebApi.Areas.HelpPage
         public static HelpPageSampleGenerator GetHelpPageSampleGenerator(this HttpConfiguration config)
         {
             return (HelpPageSampleGenerator)config.Properties.GetOrAdd(
-                                                                       typeof(HelpPageSampleGenerator),
-                                                                       k => new HelpPageSampleGenerator());
+                typeof(HelpPageSampleGenerator),
+                k => new HelpPageSampleGenerator());
         }
 
         /// <summary>
@@ -191,9 +191,9 @@ namespace WebApi.Areas.HelpPage
         public static void SetHelpPageSampleGenerator(this HttpConfiguration config, HelpPageSampleGenerator sampleGenerator)
         {
             config.Properties.AddOrUpdate(
-                                          typeof(HelpPageSampleGenerator),
-                                          k => sampleGenerator,
-                                          (k, o) => sampleGenerator);
+                typeof(HelpPageSampleGenerator),
+                k => sampleGenerator,
+                (k, o) => sampleGenerator);
         }
 
         /// <summary>
@@ -204,8 +204,8 @@ namespace WebApi.Areas.HelpPage
         public static ModelDescriptionGenerator GetModelDescriptionGenerator(this HttpConfiguration config)
         {
             return (ModelDescriptionGenerator)config.Properties.GetOrAdd(
-                                                                         typeof(ModelDescriptionGenerator),
-                                                                         k => InitializeModelDescriptionGenerator(config));
+                typeof(ModelDescriptionGenerator),
+                k => InitializeModelDescriptionGenerator(config));
         }
 
         /// <summary>
@@ -237,9 +237,9 @@ namespace WebApi.Areas.HelpPage
         private static HelpPageApiModel GenerateApiModel(ApiDescription apiDescription, HttpConfiguration config)
         {
             HelpPageApiModel apiModel = new HelpPageApiModel()
-                                        {
-                                            ApiDescription = apiDescription,
-                                        };
+            {
+                ApiDescription = apiDescription,
+            };
 
             ModelDescriptionGenerator modelGenerator = config.GetModelDescriptionGenerator();
             HelpPageSampleGenerator sampleGenerator = config.GetHelpPageSampleGenerator();
@@ -290,7 +290,7 @@ namespace WebApi.Areas.HelpPage
                     // }
                     // Regular complex class Point will have properties X and Y added to UriParameters collection.
                     if (complexTypeDescription != null
-                     && !IsBindableWithTypeConverter(parameterType))
+                        && !IsBindableWithTypeConverter(parameterType))
                     {
                         foreach (ParameterDescription uriParameter in complexTypeDescription.Properties)
                         {
@@ -338,14 +338,14 @@ namespace WebApi.Areas.HelpPage
         }
 
         private static ParameterDescription AddParameterDescription(HelpPageApiModel apiModel,
-                                                                    ApiParameterDescription apiParameter, ModelDescription typeDescription)
+            ApiParameterDescription apiParameter, ModelDescription typeDescription)
         {
             ParameterDescription parameterDescription = new ParameterDescription
-                                                        {
-                                                            Name = apiParameter.Name,
-                                                            Documentation = apiParameter.Documentation,
-                                                            TypeDescription = typeDescription,
-                                                        };
+            {
+                Name = apiParameter.Name,
+                Documentation = apiParameter.Documentation,
+                TypeDescription = typeDescription,
+            };
 
             apiModel.UriParameters.Add(parameterDescription);
             return parameterDescription;
@@ -363,7 +363,7 @@ namespace WebApi.Areas.HelpPage
                     apiModel.RequestDocumentation = apiParameter.Documentation;
                 }
                 else if (apiParameter.ParameterDescriptor != null &&
-                         apiParameter.ParameterDescriptor.ParameterType == typeof(HttpRequestMessage))
+                    apiParameter.ParameterDescriptor.ParameterType == typeof(HttpRequestMessage))
                 {
                     Type parameterType = sampleGenerator.ResolveHttpRequestMessageType(apiDescription);
 
@@ -405,16 +405,16 @@ namespace WebApi.Areas.HelpPage
             catch (Exception e)
             {
                 apiModel.ErrorMessages.Add(String.Format(CultureInfo.CurrentCulture,
-                                                         "An exception has occurred while generating the sample. Exception message: {0}",
-                                                         HelpPageSampleGenerator.UnwrapException(e).Message));
+                    "An exception has occurred while generating the sample. Exception message: {0}",
+                    HelpPageSampleGenerator.UnwrapException(e).Message));
             }
         }
 
         private static bool TryGetResourceParameter(ApiDescription apiDescription, HttpConfiguration config, out ApiParameterDescription parameterDescription, out Type resourceType)
         {
             parameterDescription = apiDescription.ParameterDescriptions.FirstOrDefault(
-                                                                                       p => p.Source == ApiParameterSource.FromBody ||
-                                                                                            (p.ParameterDescriptor != null && p.ParameterDescriptor.ParameterType == typeof(HttpRequestMessage)));
+                p => p.Source == ApiParameterSource.FromBody ||
+                    (p.ParameterDescriptor != null && p.ParameterDescriptor.ParameterType == typeof(HttpRequestMessage)));
 
             if (parameterDescription == null)
             {

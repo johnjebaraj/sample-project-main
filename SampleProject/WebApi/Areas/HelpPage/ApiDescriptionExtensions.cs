@@ -27,8 +27,8 @@ namespace WebApi.Areas.HelpPage
 
             StringBuilder friendlyPath = new StringBuilder();
             friendlyPath.AppendFormat("{0}-{1}",
-                                      description.HttpMethod.Method,
-                                      localPath.Replace("/", "-").Replace("{", String.Empty).Replace("}", String.Empty));
+                description.HttpMethod.Method,
+                localPath.Replace("/", "-").Replace("{", String.Empty).Replace("}", String.Empty));
             if (queryKeyString != null)
             {
                 friendlyPath.AppendFormat("_{0}", queryKeyString.Replace('.', '-'));

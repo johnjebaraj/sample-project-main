@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Common.Extensions;
+using System;
 using System.Collections.Generic;
-using Common.Extensions;
+using System.Text.RegularExpressions;
 
 namespace BusinessEntities
 {
@@ -60,9 +61,20 @@ namespace BusinessEntities
 
         public void SetEmail(string email)
         {
+
             if (string.IsNullOrEmpty(email))
             {
-                throw new ArgumentNullException("Name was not provided.");
+                throw new ArgumentNullException("Email was not provided.");
+            }
+            try
+            {
+                Regex.IsMatch(email,
+                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                throw new ArgumentNullException("Not a valid email.");
             }
             _email = email;
         }
