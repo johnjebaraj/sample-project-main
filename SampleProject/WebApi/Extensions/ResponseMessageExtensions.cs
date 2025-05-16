@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace System.Net.Http
 {
-    public static class CustomResponseMessage
+    public static class ResponseMessageExtensions
     {
         public static void HttpResponseMessage(this HttpResponseMessage message, HttpStatusCode statusCode,string reasonMsg)
         {

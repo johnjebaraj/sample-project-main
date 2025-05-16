@@ -24,10 +24,7 @@ namespace WebApi.Controllers
         }
         public HttpResponseMessage AlreadyExist(string reasonMsg)
         {
-            /*var response = this.AlreadyExist();
-            response.Content = new StringContent(reasonMsg, Encoding.UTF8, "application/json");*/
             return ControllerContext.Request.CreateResponse(HttpStatusCode.Conflict, reasonMsg);
-            //return response;
         }
         public HttpResponseMessage InvalidData(string reasonMsg)
         {

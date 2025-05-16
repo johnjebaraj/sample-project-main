@@ -59,10 +59,11 @@ namespace BusinessEntities
             _name = name;
         }
 
+
         public void SetEmail(string email)
         {
 
-            if (string.IsNullOrEmpty(email))
+            /*if (string.IsNullOrEmpty(email))
             {
                 throw new ArgumentNullException("Email was not provided.");
             }
@@ -75,7 +76,7 @@ namespace BusinessEntities
             catch (RegexMatchTimeoutException)
             {
                 throw new ArgumentNullException("Not a valid email.");
-            }
+            }*/
             _email = email;
         }
 
@@ -86,7 +87,7 @@ namespace BusinessEntities
 
         public void SetAge(int age)
         {
-            _email = _name;
+            _age = age;
         }
 
         public void SetMonthlySalary(decimal? monthlySalary)

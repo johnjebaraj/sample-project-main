@@ -1,9 +1,12 @@
-﻿using System;
+﻿using BusinessEntities;
+using Core.Services.Users;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Web.Helpers;
 using System.Web.Http;
-using BusinessEntities;
-using Core.Services.Users;
+using System.Xml.Linq;
 using WebApi.Models.Users;
 
 namespace WebApi.Controllers
@@ -33,7 +36,7 @@ namespace WebApi.Controllers
             {
                 return AlreadyExist(string.Format("User '{0}' already exist with id '{1}'. Consider changing the ID or Delete the existing user and attempt again", user.Name, user.Id));
             }
-            user = _createUserService.Create(userId, model.Name, model.Email, model.Type, model.AnnualSalary, model.Tags);
+            user = _createUserService.Create(userId, model.Name, model.Email, model.Type, model.AnnualSalary, model.Age, model.Tags);
             return Found(new UserData(user));
         }
 
@@ -46,7 +49,12 @@ namespace WebApi.Controllers
             {
                 return DoesNotExist();
             }
-            _updateUserService.Update(user, model.Name, model.Email, model.Type, model.AnnualSalary, model.Tags);
+            if (!ModelState.IsValid)
+            {
+                var modelValidationErrors = String.Join(":", ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage)));
+                return InvalidData(string.Format("Updating User '{0}' Failed with validation Error(s) '{1}'", user.Name, modelValidationErrors));
+            }
+            _updateUserService.Update(user, model.Name, model.Email, model.Type, model.AnnualSalary, model.Age, model.Tags);
             return Found(new UserData(user));
         }
 
@@ -73,9 +81,9 @@ namespace WebApi.Controllers
 
         [Route("list")]
         [HttpGet]
-        public HttpResponseMessage GetUsers(int skip, int take, UserTypes? type = null, string name = null, string email = null)
+        public HttpResponseMessage GetUsers(int skip, int take, UserTypes? type = null, string name = null, string email = null,string tag = null)
         {
-            var users = _getUserService.GetUsers(type, name, email)
+            var users = _getUserService.GetUsers(type, name, email,tag)
                                        .Skip(skip).Take(take)
                                        .Select(q => new UserData(q))
                                        .ToList();
@@ -94,7 +102,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetUsersByTag(string tag)
         {
-            throw new NotImplementedException();
+            return this.GetUsers(0, 10, null, null, null, tag);
         }
     }
 }
