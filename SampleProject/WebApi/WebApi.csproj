@@ -215,6 +215,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Extensions\ResponseMessageExtensions.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -223,6 +224,11 @@
     </Compile>
     <Compile Include="Models\EnumData.cs" />
     <Compile Include="Models\IdObjectData.cs" />
+    <Compile Include="Models\Orders\OrderData.cs" />
+    <Compile Include="Models\Orders\OrderModel.cs" />
+    <Compile Include="Models\Products\ProductData.cs" />
+    <Compile Include="Models\Products\ProductSearchModel.cs" />
+    <Compile Include="Models\Products\ProductModel.cs" />
     <Compile Include="Models\Users\UserData.cs" />
     <Compile Include="Models\Users\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

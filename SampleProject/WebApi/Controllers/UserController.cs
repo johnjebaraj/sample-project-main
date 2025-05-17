@@ -81,10 +81,11 @@ namespace WebApi.Controllers
 
         [Route("list")]
         [HttpGet]
-        public HttpResponseMessage GetUsers(int skip, int take, UserTypes? type = null, string name = null, string email = null,string tag = null)
+        public HttpResponseMessage GetUsers(int? skip, int? take, UserTypes? type = null, string name = null, string email = null,string tag = null)
         {
+            //As per RevenDB, queries will return up to 1024 results due to the server default max page size value.
             var users = _getUserService.GetUsers(type, name, email,tag)
-                                       .Skip(skip).Take(take)
+                                      .Skip(skip.HasValue ? skip.Value : 0).Take(take.HasValue ? take.Value : 9999)
                                        .Select(q => new UserData(q))
                                        .ToList();
             return Found(users);
@@ -102,7 +103,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetUsersByTag(string tag)
         {
-            return this.GetUsers(0, 10, null, null, null, tag);
+            return this.GetUsers(null,null,null, null, null, tag);
         }
     }
 }

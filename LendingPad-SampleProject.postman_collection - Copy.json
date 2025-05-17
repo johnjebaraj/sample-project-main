@@ -278,66 +278,12 @@
 			"item": [
 				{
 					"name": "Products",
-					"item": [
-						{
-
-								"name": "Clear products",
-								"request": {
-									"method": "DELETE",
-									"header": [],
-									"url": {
-										"raw": "http://localhost:49834/products/clear",
-										"protocol": "http",
-										"host": [
-											"localhost"
-										],
-										"port": "49834",
-										"path": [
-											"products",
-											"clear"
-										]
-									}
-								},
-								"response": []
-							},
-							{
-								"name": "Create Product",
-								"request": {
-									"method": "POST",
-									"header": [],
-									"body": {
-										"mode": "raw",
-										"raw": "//The exception \"PUT attempted on document 'product/51684A04-9632-4D9F-AB5F-27E6CF59B48D' using a non current etag\" means that the record with the same ID already exists.\r\n{\r\n    \"name\": \"Coffee Bean\",\r\n    \"Description\": \"Starbucks Medium Roast\",\r\n    \"type\": 1,\r\n    \"Date\": \"S05/01/2025\",\r\n    \"Price\": 19.99,\r\n    \"tags\": []\r\n}",
-										"options": {
-											"raw": {
-												"language": "json"
-											}
-										}
-									},
-									"url": {
-										"raw": "http://localhost:49834/products/51684A04-9632-4D9F-AB5F-27E6CF59B48D/create",
-										"protocol": "http",
-										"host": [
-											"localhost"
-										],
-										"port": "49834",
-										"path": [
-											"products",
-											"51684A04-9632-4D9F-AB5F-27E6CF59B48D",
-											"create"
-										]
-									}
-								},
-								"response": []
-								
-						}
-					]
+					"item": []
 				},
 				{
 					"name": "Orders",
 					"item": []
 				}
-
 			]
 		}
 	]
