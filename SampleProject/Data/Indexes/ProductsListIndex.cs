@@ -17,7 +17,7 @@ namespace Data.Indexes
                                       product.Tags
                                   };
 
-            Index(x => x.Type, FieldIndexing.NotAnalyzed);
+            Index(x => x.Id, FieldIndexing.NotAnalyzed);
         }
     }
 }

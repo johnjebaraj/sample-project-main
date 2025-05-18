@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BusinessEntities;
 using Common;
@@ -16,7 +17,6 @@ namespace Data.Repositories
         {
             _documentSession = documentSession;
         }
-
         public IEnumerable<Product> Get(ProductTypes? productType = null, string name = null, string tag = null)
         {
             var query = _documentSession.Advanced.DocumentQuery<Product, ProductsListIndex>();
@@ -52,8 +52,7 @@ namespace Data.Repositories
             }
             return query.ToList();
         }
-
-        public void DeleteAll()
+           public void DeleteAll()
         {
             base.DeleteAll<ProductsListIndex>();
         }

@@ -7,11 +7,11 @@ namespace WebApi.Models.Orders
 {
     public class OrderModel
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public ProductTypes Type { get; set; }
-        public decimal Price { get; set; }
-        public DateTime? Date { get; set; }
+        public Guid Customer { get; set; }
+        public IEnumerable<Guid> Products { get; set; }
+        public decimal Amount { get; set; }
+        public int Quantity { get; set; }
+        public DateTime OrderDate { get; set; }
         public IEnumerable<string> Tags { get; set; }
     }
 }

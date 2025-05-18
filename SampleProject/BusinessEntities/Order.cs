@@ -9,39 +9,35 @@ namespace BusinessEntities
     {
         private readonly List<string> _tags = new List<string>();
         private Guid _customer;
-        private List<Guid> _products;
-        private decimal _total;
-        private string _address;
-        private DateTime _date;
+        private List<Guid> _products = new List<Guid>();
+        private decimal _amount;
+        private int _quantity;
+        private DateTime _orderDate;
 
         public Guid Customer
         {
             get => _customer;
             private set => _customer = value;
         }
-
-        public string Address
-        {
-            get => _address;
-            private set => _address = value;
-        }
-
-        public decimal Total
-        {
-            get => _total;
-            private set => _total = value;
-        }
-
-        public DateTime Date
-        {
-            get => _date;
-            private set => _date = value;
-        }
-
         public IEnumerable<Guid> Products
         {
             get => _products;
             private set => _products.Initialize(value);
+        }
+        public Decimal Amount
+        {
+            get => _amount;
+            private set => _amount = value;
+        }
+        public int Quantity
+        {
+            get => _quantity;
+            private set => _quantity = value;
+        }
+        public DateTime OrderDate
+        {
+            get => _orderDate;
+            private set => _orderDate = value;
         }
 
         public IEnumerable<string> Tags
@@ -54,20 +50,18 @@ namespace BusinessEntities
         {
             _customer = customer;
         }
-        public void SetDate(DateTime date)
+        public void SetOrderDate(DateTime orderDate)
         {
-            _date = date;
+            _orderDate = orderDate;
         }
 
-        public void SetTotal(Decimal total)
+        public void SetAmount(Decimal amount)
         {
-            _total = total;
+            _amount = amount;
         }
-
-
-        public void SetAddress(string address)
+        public void SetQuantity(int quantity)
         {
-            _address = address;
+            _quantity = quantity;
         }
         public void SetProducts(IEnumerable<Guid> products)
         {

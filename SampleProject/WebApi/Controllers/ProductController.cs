@@ -28,24 +28,24 @@ namespace WebApi.Controllers
             _updateProductService = updateProductService;
         }
 
-        [Route("{userId:guid}/create")]
+        [Route("{productId:guid}/create")]
         [HttpPost]
-        public HttpResponseMessage CreateProduct(Guid userId, [FromBody] ProductModel model)
+        public HttpResponseMessage CreateProduct(Guid productId, [FromBody] ProductModel model)
         {
-            var product = _getProductService.GetProduct(userId);
+            var product = _getProductService.GetProduct(productId);
             if (product != null)
             {
                 return AlreadyExist(string.Format("Product '{0}' already exist with id '{1}'. Consider changing the ID or Delete the existing product and attempt again", product.Name, product.Id));
             }
-            product = _createProductService.Create(userId, model.Name, model.Description, model.Type, model.Date, model.Price, model.Tags);
+            product = _createProductService.Create(productId, model.Name, model.Description, model.Type, model.Date, model.Price, model.Tags);
             return Found(new ProductData(product));
         }
 
-        [Route("{userId:guid}/update")]
+        [Route("{productId:guid}/update")]
         [HttpPost]
-        public HttpResponseMessage UpdateProduct(Guid userId, [FromBody] ProductModel model)
+        public HttpResponseMessage UpdateProduct(Guid productId, [FromBody] ProductModel model)
         {
-            var product = _getProductService.GetProduct(userId);
+            var product = _getProductService.GetProduct(productId);
             if (product == null)
             {
                 return DoesNotExist();
@@ -59,11 +59,11 @@ namespace WebApi.Controllers
             return Found(new ProductData(product));
         }
 
-        [Route("{userId:guid}/delete")]
+        [Route("{productId:guid}/delete")]
         [HttpDelete]
-        public HttpResponseMessage DeleteProduct(Guid userId)
+        public HttpResponseMessage DeleteProduct(Guid productId)
         {
-            var product = _getProductService.GetProduct(userId);
+            var product = _getProductService.GetProduct(productId);
             if (product == null)
             {
                 return DoesNotExist();
@@ -72,11 +72,11 @@ namespace WebApi.Controllers
             return Found();
         }
 
-        [Route("{userId:guid}")]
+        [Route("{productId:guid}")]
         [HttpGet]
-        public HttpResponseMessage GetProduct(Guid userId)
+        public HttpResponseMessage GetProduct(Guid productId)
         {
-            var product = _getProductService.GetProduct(userId);
+            var product = _getProductService.GetProduct(productId);
             return Found(new ProductData(product));
         }
 
