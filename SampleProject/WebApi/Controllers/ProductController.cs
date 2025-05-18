@@ -106,7 +106,22 @@ namespace WebApi.Controllers
             return Found(products);
         }
 
-       
+        [Route("filter")]
+        [HttpGet]
+        public HttpResponseMessage FilterProducts([FromBody] ProductFilterModel filterModel)
+        {
+            var allProducts = ProductModel.GetFabiricatedProducts();
+            var products = from p in allProducts
+                           where (!string.IsNullOrEmpty(filterModel.NameContains) && p.Name.Contains(filterModel.NameContains)
+                           || ((filterModel.FromPrice.HasValue && filterModel.ToPrice.HasValue) && p.Price >= filterModel.FromPrice.Value && p.Price <= filterModel.FromPrice.Value)
+                           || ((filterModel.ToDate.HasValue && filterModel.FromDate.HasValue) && p.Date >= filterModel.FromDate.Value && p.Date <= filterModel.ToDate.Value)
+                           || !string.IsNullOrEmpty(filterModel.DescriptionContains) && p.Description.Contains(filterModel.DescriptionContains))
+                           select p;
+
+            return Found(products);
+        }
+
+
         [Route("clear")]
         [HttpDelete]
         public HttpResponseMessage DeleteAllProducts()
